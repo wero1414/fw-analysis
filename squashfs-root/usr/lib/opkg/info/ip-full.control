@@ -1,0 +1,10 @@
+Package: ip-full
+Version: 4.4.0-2
+Depends: libc, libnl-tiny
+Source: package/network/utils/iproute2
+License: GPL-2.0
+Section: net
+Maintainer: Russell Senior <russell@personaltelco.net>
+Architecture: mvebu
+Installed-Size: 132418
+Description:  Routing control utility (Full)

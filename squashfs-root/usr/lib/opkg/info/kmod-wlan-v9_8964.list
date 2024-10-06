@@ -1,0 +1,14 @@
+/etc/mrvl/48.ini
+/lib/wifi/marvell.sh
+/etc/mrvl/32.ini
+/etc/mrvl/144.ini
+/etc/modules.d/91-wlan-v9_8964
+/etc/init.d/marvellwl
+/etc/mrvl/16.ini
+/etc/init.d/wps
+/etc/mrvl/145.ini
+/etc/mrvl/129.ini
+/lib/netifd/netifd-wireless.sh
+/lib/netifd/wireless/marvell.sh
+/lib/firmware/wlan-v9_8964/W8964.bin
+/lib/modules/4.4.14/ap8x.ko

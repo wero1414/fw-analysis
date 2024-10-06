@@ -1,0 +1,8 @@
+Package: krouter-scripts
+Version: 1.0-1
+Depends: libc, tc, kmod-sched, iptables-mod-ipmark, kmod-sched-core, kmod-sched-connmark, kmod-ifb, iptables, iptables-mod-ipopt, iptables-mod-conntrack-extra
+Source: /jenkins/workspace/fw.openwrt.sp1.venom.dev/linksys/feed/rivet/krouter-scripts
+Section: utils
+Architecture: all
+Installed-Size: 4829
+Description:  Scripts to setup Qdiscs for Killer Networking marked packet prioritization

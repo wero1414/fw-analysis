@@ -1,0 +1,175 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2008 Alina Friedrichsen
+# Copyright (C) 2011 OpenWrt.org
+
+START=50
+
+SERVICE_USE_PID=1
+
+siproxd_bin="/usr/sbin/siproxd"
+siproxd_conf_dir="/var/etc/siproxd"
+siproxd_conf_prefix="$siproxd_conf_dir/siproxd-"
+siproxd_registration_dir="/var/lib/siproxd"
+siproxd_registration_prefix="$siproxd_registration_dir/siproxd-"
+siproxd_pid_dir="/var/run/siproxd"
+
+
+# Check if a UCI option is set, or else apply a provided default.
+
+default_conf() {
+	local opt="$1"
+	local default="$2"
+	local val
+
+	config_get "$opt" "$sec" "$opt"
+	eval "val=\"\${$opt}\""
+
+	[ -z "$val" ] || return 0
+	[ -n "$default" ] || return 0
+	echo "$opt" = "$default" >> "$siproxd_conf_prefix$sec.conf"
+}
+
+# Use user-friendly network names (e.g. "wan", "lan") from options
+# 'interface_inbound' and 'interface_outbound', but use standard siproxd
+# parameters 'if_inbound' and 'if_outbound' if explicitly set.
+
+setup_networks() {
+	local sec="$1"
+	local _int_inbound
+	local _int_outbound
+	local _dev_inbound
+	local _dev_outbound
+
+	config_get _int_inbound "$sec" interface_inbound
+	config_get _int_outbound "$sec" interface_outbound
+
+	network_get_physdev _dev_inbound $_int_inbound
+	network_get_physdev _dev_outbound $_int_outbound
+
+	default_conf if_inbound $_dev_inbound
+	default_conf if_outbound $_dev_outbound
+}
+
+# Apply default values to key options if unset in user's UCI config.
+
+apply_defaults() {
+	local sec="$1"
+
+	default_conf sip_listen_port 5060
+	default_conf daemonize 1
+	default_conf silence_log 1
+	default_conf user nobody
+	default_conf registration_file "$siproxd_registration_prefix$sec.reg"
+	default_conf autosave_registrations 300
+	default_conf pid_file "$siproxd_pid_dir/siproxd-$sec.pid"
+	default_conf rtp_proxy_enable 1
+	default_conf rtp_port_low 7070
+	default_conf rtp_port_high 7089
+	default_conf rtp_timeout 300
+	default_conf rtp_dscp 46
+	default_conf sip_dscp 0
+	default_conf rtp_input_dejitter 0
+	default_conf rtp_output_dejitter 0
+	default_conf tcp_timeout 600
+	default_conf tcp_connect_timeout 500
+	default_conf tcp_keepalive 20
+	default_conf default_expires 600
+	default_conf debug_level 0x00000000
+	default_conf debug_port 0
+	default_conf ua_string Siproxd-UA
+	default_conf use_rport 0
+	default_conf plugindir "/usr/lib/siproxd/"
+}
+
+# Setup callbacks for parsing siproxd sections, options, and lists.
+# This avoids hardcoding all supported siproxd configuration parameters.
+
+siproxd_cb() {
+	config_cb() {
+		local _int_inbound
+		local _int_outbound
+		local _dev_inbound
+		local _dev_outbound
+
+		case "$1" in
+			# Initialize section processing and save section name.
+			"siproxd")
+				sec="$2"
+				if [ -f "$siproxd_conf_prefix$sec.conf" ]; then
+					rm "$siproxd_conf_prefix$sec.conf"
+				fi
+				echo "# auto-generated config file from /etc/config/siproxd" > \
+					"$siproxd_conf_prefix$sec.conf"
+			;;
+			# Parse OpenWRT interface names (e.g. "wan") and apply defaults,
+			# using saved section name.
+			"")
+				local chrootjail
+				local pid_file
+
+				setup_networks "$sec"
+				apply_defaults "$sec"
+
+				config_get chrootjail "$sec" chrootjail
+				if [ -n "$chrootjail" ]; then
+					if [ ! -d "$chrootjail" ]; then
+						mkdir -p "$chrootjail"
+						chmod 0755 "$chrootjail"
+					fi
+				fi
+
+				config_get pid_file "$sec" pid_file
+				SERVICE_PID_FILE="$pid_file" service_start \
+				$siproxd_bin --config "$siproxd_conf_prefix$sec.conf"
+			;;
+		esac
+		return 0
+	}
+
+	option_cb() {
+		# These 2 OpenWRT-specific options are handled in post-processing.
+		case "$1" in
+			"interface_inbound"|"interface_outbound") return 0 ;;
+		esac
+		# Other options match siproxd docs, so write directly to config.
+		[ -n "$2" ] && echo "$1" = "$2" >> "$siproxd_conf_prefix$sec.conf"
+		return 0
+	}
+
+	list_cb() {
+		# All list items match siproxd docs, so write directly to config.
+		[ -n "$2" ] && echo "$1" = "$2" >> "$siproxd_conf_prefix$sec.conf"
+		return 0
+	}
+}
+
+stop_instance() {
+	local sec="$1"
+
+	config_get pid_file "$sec" pid_file "$siproxd_pid_dir/siproxd-$sec.pid"
+
+	SERVICE_PID_FILE="$pid_file" \
+	service_stop $siproxd_bin
+}
+
+start() {
+	mkdir -p "$siproxd_conf_dir"
+	chmod 755 "$siproxd_conf_dir"
+
+	mkdir -p "$siproxd_registration_dir"
+	chmod 700 "$siproxd_registration_dir"
+	chown nobody:nogroup "$siproxd_registration_dir"
+
+	mkdir -p "$siproxd_pid_dir"
+	chmod 700 "$siproxd_pid_dir"
+	chown nobody:nogroup "$siproxd_pid_dir"
+
+	. /lib/functions/network.sh
+	siproxd_cb
+	config_load 'siproxd'
+}
+
+stop() {
+	config_load 'siproxd'
+	config_foreach stop_instance 'siproxd'
+}

@@ -1,0 +1,10 @@
+Package: openvpn-polarssl
+Version: 2.3.11-1
+Depends: libc, kmod-tun, liblzo, libpolarssl
+Source: package/network/services/openvpn
+License: GPL-2.0
+Section: net
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Architecture: mvebu
+Installed-Size: 161470
+Description:  Open source VPN solution using PolarSSL

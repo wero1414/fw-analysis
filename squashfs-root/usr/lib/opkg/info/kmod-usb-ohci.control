@@ -1,0 +1,10 @@
+Package: kmod-usb-ohci
+Version: 4.4.14-1
+Depends: kernel (=4.4.14-1-4ece341e0d53186f3f6f9df645878eff), kmod-usb-core
+Source: package/kernel/linux
+License: GPLv2
+Section: kernel
+Status: unknown hold not-installed
+Architecture: mvebu
+Installed-Size: 20923
+Description:  Kernel support for USB OHCI controllers

@@ -1,0 +1,11 @@
+Package: hostapd-utils
+Version: 2016-01-15-3
+Depends: libc
+Source: /jenkins/workspace/fw.openwrt.sp1.venom.dev/linksys/feed/marvell/hostapd
+License: BSD-3-Clause
+Section: net
+Maintainer: Felix Fietkau <nbd@openwrt.org>
+Architecture: mvebu
+Installed-Size: 19629
+Description:  This package contains a command line utility to control the
+ IEEE 802.1x/WPA/EAP/RADIUS Authenticator.

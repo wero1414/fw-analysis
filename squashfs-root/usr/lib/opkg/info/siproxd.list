@@ -1,0 +1,3 @@
+/etc/config/siproxd
+/etc/init.d/siproxd
+/usr/sbin/siproxd

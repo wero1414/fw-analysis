@@ -1,0 +1,17 @@
+#!/bin/sh
+
+. /lib/config/uci.sh
+
+logger -t krouter "Adding qdiscs for lan"
+/usr/lib/krouter-scripts/qdisc_control.sh lan
+logger -t krouter "Adding qdiscs for wan"
+/usr/lib/krouter-scripts/qdisc_control.sh wan
+
+logger -t krouter "Configuring DNSmasq and adding current clients"
+# TODO: find right dnsmasq server entry
+uci_set dhcp @dnsmasq[-1] dhcpscript "/usr/lib/krouter-scripts/dhcp-hook.sh"
+uci_commit
+/etc/init.d/dnsmasq reload
+
+logger -t krouter "Adding firewall DSCP marking"
+/usr/lib/krouter-scripts/firemark.sh

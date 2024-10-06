@@ -1,0 +1,10 @@
+Package: libosip2
+Version: 5.0.0-3
+Depends: libc, librt
+Source: feeds/telephony/libs/libosip2
+License: LGPL-2.1+
+LicenseFiles: COPYING
+Section: libs
+Architecture: mvebu
+Installed-Size: 65545
+Description:  GNU oSIP library, a Session Initiation Protocol (SIP) implementation.

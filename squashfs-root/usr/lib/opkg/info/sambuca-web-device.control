@@ -1,0 +1,9 @@
+Package: sambuca-web-device
+Version: 2017-03-15-1-1
+Depends: libc, uhttpd, uhttpd-mod-ubus, rpcd, rpcd-mod-rpcsys, rpcd-mod-file, pptpd, miniupnpd, ddns-scripts, ddns-scripts_no-ip_com, openvpn-polarssl, ip-full, kmod-usb-core, kmod-usb-ohci, kmod-usb-uhci, kmod-usb2, kmod-usb3, kmod-usb-storage, kmod-usb-storage-extras, usbutils, kmod-nls-cp437, kmod-nls-iso8859-1, kmod-nls-utf8, kmod-scsi-core, kmod-fs-ext4, kmod-fs-msdos, ntfs-3g, lsblk, pppoe-discovery, kmod-fs-hfsplus, fsck.hfs, samba3, samba3-nmbd, vsftpd, ca-certificates, uhttpd-mod-tls, uhttpd-mod-tls_polarssl, BUSYBOX_CONFIG_NTPD
+Source: /jenkins/workspace/fw.openwrt.sp1.venom.dev/linksys/feed/sartura/sambuca-web-device
+Section: sambuca
+Maintainer: Davor Popovic <davor.popovic@sartura.hr>
+Architecture: mvebu
+Installed-Size: 2355399
+Description:  Sambuca web interface

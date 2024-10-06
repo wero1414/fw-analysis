@@ -1,0 +1,10 @@
+Package: hostapd-common
+Version: 2016-01-15-3
+Depends: libc
+Source: /jenkins/workspace/fw.openwrt.sp1.venom.dev/linksys/feed/marvell/hostapd
+License: BSD-3-Clause
+Section: net
+Maintainer: Felix Fietkau <nbd@openwrt.org>
+Architecture: mvebu
+Installed-Size: 5308
+Description:  hostapd/wpa_supplicant common support files

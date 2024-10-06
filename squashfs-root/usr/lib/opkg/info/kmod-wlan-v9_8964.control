@@ -1,0 +1,10 @@
+Package: kmod-wlan-v9_8964
+Version: 4.4.14-4
+Depends: kernel (=4.4.14-1-4ece341e0d53186f3f6f9df645878eff), wireless-tools
+Source: /jenkins/workspace/fw.openwrt.sp1.venom.dev/linksys/feed/marvell/wlan-v9_8964
+License: Proprietary
+Section: kernel
+Maintainer: Rujun Wang <loganw@marvell.com>
+Architecture: mvebu
+Installed-Size: 707991
+Description:  Marvell 88W8964 property wireless driver

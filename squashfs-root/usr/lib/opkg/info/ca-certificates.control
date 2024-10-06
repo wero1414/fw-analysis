@@ -1,0 +1,9 @@
+Package: ca-certificates
+Version: 20161130+nmu1
+Depends: libc
+Source: package/system/ca-certificates
+Section: base
+Maintainer: Christian Schoenebeck <christian.schoenebeck@gmail.com>
+Architecture: all
+Installed-Size: 161665
+Description:  System CA certificates

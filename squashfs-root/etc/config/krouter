@@ -1,0 +1,6 @@
+config krouter krouter
+	option enabled  1
+	option debug 0
+	option upload  1000000000bit
+	option download  1000000000bit
+	option xbox_detection 0

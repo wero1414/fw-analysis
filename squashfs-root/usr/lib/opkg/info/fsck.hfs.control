@@ -1,0 +1,10 @@
+Package: fsck.hfs
+Version: 332.25-1
+Depends: libc
+Source: /jenkins/workspace/fw.openwrt.sp1.venom.dev/linksys/feed/sartura/diskdev_cmds
+License: APSL 2.0
+Section: utils
+Maintainer: Vladimir Vid <vladimir.vid@sartura.hr>
+Architecture: mvebu
+Installed-Size: 88157
+Description:  The fsck.hfs utility verifies and repairs standard HFS and HFS+ filesystems.

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+krouter_start() {
+	logger -t krouter "Reloading qos due to $ACTION of $INTERFACE ($DEVICE)"
+	/usr/lib/krouter-scripts/qdisc_control.sh $INTERFACE
+}
+
+[ "$ACTION" = ifup ] && /etc/init.d/krouter-scripts enabled && krouter_start

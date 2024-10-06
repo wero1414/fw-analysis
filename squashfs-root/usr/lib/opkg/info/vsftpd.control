@@ -1,0 +1,10 @@
+Package: vsftpd
+Version: 3.0.3-2
+Depends: libc
+Source: feeds/packages/net/vsftpd
+License: GPLv2
+Section: net
+Maintainer: Cezary Jackiewicz <cezary@eko.one.pl>
+Architecture: mvebu
+Installed-Size: 41580
+Description:  Fast and secure FTP server (no TLS)

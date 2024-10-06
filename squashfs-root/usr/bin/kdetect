@@ -1,0 +1,57 @@
+#!/bin/sh
+
+alias debug='>&2 echo'
+
+usage() {
+	echo "Usage: $0 <address>"
+}
+
+if [ $# -le 0 ]
+then
+	usage
+	exit 0
+fi
+
+ADDR=$1
+
+. /usr/share/libubox/jshn.sh
+LAN_STATUS=$(ubus call network.interface.lan status)
+json_load "$LAN_STATUS"
+json_get_var LAN_DEVICE l3_device
+
+MODELNAME=$(uclient-fetch -q -T1 -O- http://$ADDR:1027 | grep -o "<modelName>Xbox 360</modelName>")
+if [ $? -eq 0 ]; then
+	echo Xbox 360
+	exit 0
+fi
+
+URL=$(listdevices -m ${LAN_DEVICE} | grep "http://$ADDR:" | head -1 | awk '{print $1}')
+debug url: $URL
+
+if [ -n "$URL" ]
+then
+	MODELNAME=$(uclient-fetch -q -O- "$URL" | grep -o "<modelName>Xbox One</modelName>")
+	#debug modelname: $MODELNAME
+	if [ $? -eq 0 ]; then
+		echo Xbox One
+		exit 0
+	fi
+	MODELNAME=$(uclient-fetch -q -O- "$URL" | grep -o "<modelName>Xbox 360</modelName>")
+	#debug modelname: $MODELNAME
+	if [ $? -eq 0 ]; then
+		echo Xbox 360
+		exit 0
+	fi
+fi
+
+AVAHI_HOSTNAME=$(avahi-resolve -a $ADDR | awk '{print $2}')
+debug hostname: $AVAHI_HOSTNAME
+
+case $AVAHI_HOSTNAME in
+       PS4-*)
+               echo PS4
+               exit 0
+               ;;
+esac
+
+echo Unknown

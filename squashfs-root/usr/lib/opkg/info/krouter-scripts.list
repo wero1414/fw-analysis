@@ -1,0 +1,10 @@
+/etc/hotplug.d/iface/11-krouter
+/etc/init.d/krouter-scripts
+/etc/config/krouter
+/usr/lib/krouter-scripts/firemark.sh
+/usr/bin/kdetect
+/usr/libexec/rpcd/krouter
+/usr/lib/krouter-scripts/qdisc_control.sh
+/usr/lib/krouter-scripts/dhcp-hook.sh
+/usr/share/rpcd/acl.d/krouter.json
+/usr/bin/krouter-start

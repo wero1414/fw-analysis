@@ -1,0 +1,8 @@
+Package: ookla
+Version: 1.3.0-79-1
+Depends: libc, libstdcpp
+Source: /jenkins/workspace/fw.openwrt.sp1.venom.dev/linksys/feed/ookla
+Section: utils
+Architecture: all
+Installed-Size: 442054
+Description:  "Ookla Nano", the lightweight Ookla client

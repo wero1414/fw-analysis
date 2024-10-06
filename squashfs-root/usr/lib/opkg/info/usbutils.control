@@ -1,0 +1,11 @@
+Package: usbutils
+Version: 007-4
+Depends: libc, libusb-1.0, librt, libpthread
+Source: package/utils/usbutils
+License: GPL-2.0
+LicenseFiles: COPYING
+Section: utils
+Maintainer: Felix Fietkau <nbd@nbd.name>
+Architecture: mvebu
+Installed-Size: 227223
+Description:  USB devices listing utilities

@@ -1,0 +1,9 @@
+Package: miniupnpc
+Version: 2.0.20170509-1
+Depends: libc, libminiupnpc
+Source: feeds/packages/net/miniupnpc
+Section: net
+Maintainer: Steven Barth <cyrus@openwrt.org>
+Architecture: mvebu
+Installed-Size: 26665
+Description:  Lightweight UPnP client

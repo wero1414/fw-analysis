@@ -1,0 +1,10 @@
+Package: samba3-nmbd
+Version: 3.0.37-5
+Depends: libc, samba3
+Source: /jenkins/workspace/fw.openwrt.sp1.venom.dev/linksys/feed/sartura/samba3
+Section: net
+Architecture: mvebu
+Installed-Size: 378270
+Description:  NetBIOS name server
+ 
+ Made small with patches taken from AVM GPL releases and freetz 
